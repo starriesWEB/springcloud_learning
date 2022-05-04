@@ -1,0 +1,24 @@
+server:
+  port: 2002
+
+spring:
+  application:
+    name: seata-storage-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/seata_storage?useSSL=false
+    username: root
+    password: root
+
+logging:
+  level:
+    io:
+      seata: info
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+seata:
+  tx-service-group: my_test_tx_group

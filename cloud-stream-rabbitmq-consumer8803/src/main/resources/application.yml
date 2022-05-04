@@ -1,0 +1,37 @@
+server:
+  port: 8803
+
+spring:
+  application:
+    name: cloud-stream-consumer
+  cloud:
+    stream:
+      binders:
+        rabbit1:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: guest
+                password: guest
+      bindings:
+        # 自定义通道名称
+        input:
+          # 要使用的Exchange
+          destination: myExchange
+          content-type: application/json
+          binder: rabbit1
+          # 配置group
+          group: sameGroup
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka
+  instance:
+    lease-renewal-interval-in-seconds: 2
+    lease-expiration-duration-in-seconds: 5
+    instance-id: receive-8803.com
+    prefer-ip-address: true
+

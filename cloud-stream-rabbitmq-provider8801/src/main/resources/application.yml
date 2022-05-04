@@ -1,0 +1,45 @@
+server:
+  port: 8801
+
+spring:
+  application:
+    name: cloud-stream-provider
+  cloud:
+    stream:
+      # 绑定 提供服务的mq信息(配置)
+      binders:
+        # 自定义mq名称
+        rabbit1:
+          # 类型 rabbit kafka
+          type: rabbit
+          # 环境配置
+          environment:
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: guest
+                password: guest
+      # 绑定整合 将mq和 输入/输出 进行绑定(整合)
+      bindings:
+        # 自定义通道名称
+        output:
+          # topic目的地，rabbit中是exchange
+          destination: myExchange
+          # 消息类型
+          content-type: application/json
+          # 和哪个mq进行绑定
+          binder: rabbit1
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka
+  instance:
+    # 心跳间隔时间 默认30s
+    lease-renewal-interval-in-seconds: 2
+    # 超时间隔 默认90s
+    lease-expiration-duration-in-seconds: 5
+    # 实例id(显示主机名称)
+    instance-id: send-8801.com
+    # 访问路径为ip
+    prefer-ip-address: true

@@ -1,0 +1,36 @@
+server:
+  port: 2001
+
+spring:
+  application:
+    name: seata-order-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/seata_order?useSSL=false
+    username: root
+    password: root
+
+# 新版本，老版本是spring.cloud.alibaba.seata.tx-service-group
+seata:
+  tx-service-group: my_test_tx_group
+
+logging:
+  level:
+    io:
+      seata: info
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+
+# 配置feign的超时，方便后续模拟远程调用失败
+feign:
+  client:
+    config:
+      # 这里就是指的所有被加载的默认FeignClient实现的服务配置都生效
+      default:
+        connectTimeout: 1000
+        readTimeout: 2000
+
